@@ -4,22 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal de Calificaciones - La Movida de SST</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  
-  <!-- html2canvas para descargar la tarjeta como imagen -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
+            sans: ['Outfit', 'sans-serif']
           },
           colors: {
             brand: {
@@ -27,12 +25,12 @@
               dark: '#00205b',
               green: '#70ad47',
               yellow: '#ffb600',
-              bg: '#f8fafc',
+              bg: '#f8fafc'
             }
           }
         }
       }
-    }
+    };
   </script>
 
   <style>
@@ -50,8 +48,8 @@
 
     .tech-grid {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-image: 
+      inset: 0;
+      background-image:
         linear-gradient(to right, rgba(0,32,91,0.03) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0,32,91,0.03) 1px, transparent 1px);
       background-size: 50px 50px;
@@ -66,64 +64,101 @@
       opacity: 0.08;
       animation: pulse-glow 6s infinite alternate;
     }
-    .glow-teal { background: #007b85; width: 400px; height: 400px; top: -100px; left: -100px; }
-    .glow-yellow { background: #ffb600; width: 300px; height: 300px; bottom: 10%; right: -50px; animation-delay: 2s; }
-    .glow-dark { background: #00205b; width: 350px; height: 350px; top: 40%; left: 20%; animation-delay: 4s; }
+
+    .glow-teal {
+      background: #007b85;
+      width: 400px;
+      height: 400px;
+      top: -100px;
+      left: -100px;
+    }
+
+    .glow-yellow {
+      background: #ffb600;
+      width: 300px;
+      height: 300px;
+      bottom: 10%;
+      right: -50px;
+      animation-delay: 2s;
+    }
+
+    .glow-dark {
+      background: #00205b;
+      width: 350px;
+      height: 350px;
+      top: 40%;
+      left: 20%;
+      animation-delay: 4s;
+    }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(226, 232, 240, 0.6);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(226, 232, 240, 0.70);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
       border-radius: 24px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
 
-    .glass-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 30px -5px rgba(0, 123, 133, 0.12);
+    .result-card {
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 12px 34px -18px rgba(0, 32, 91, 0.28);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .glass-card::before {
+    .result-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
       background: linear-gradient(90deg, #00205b, #007b85, #70ad47);
-      opacity: 0;
-      transition: opacity 0.3s ease;
     }
-    .glass-card:hover::before { opacity: 1; }
 
     @keyframes pulse-glow {
       0% { opacity: 0.05; transform: scale(1); }
       100% { opacity: 0.12; transform: scale(1.1); }
     }
+
     @keyframes float {
-      0% { transform: translateY(0px); }
+      0% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
-      100% { transform: translateY(0px); }
+      100% { transform: translateY(0); }
     }
-    .animate-float { animation: float 4s ease-in-out infinite; }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
 
     .spinner {
-      width: 40px; height: 40px;
+      width: 40px;
+      height: 40px;
       border: 4px solid rgba(0, 123, 133, 0.2);
       border-top: 4px solid #007b85;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
+
 <body class="p-4 sm:p-10">
 
-  <!-- Botón de Retorno -->
-  <a href="https://estudia.movidasst.com" 
-     class="absolute top-4 left-4 sm:top-8 sm:left-8 z-50 flex items-center gap-2 px-4 py-2.5 bg-white/70 backdrop-blur-md border border-slate-200/60 text-brand-dark font-medium text-sm rounded-full hover:bg-brand-teal hover:text-white hover:border-brand-teal hover:shadow-lg transition-all duration-300 group">
+  <a
+    href="https://estudia.movidasst.com"
+    class="absolute top-4 left-4 sm:top-8 sm:left-8 z-50 flex items-center gap-2 px-4 py-2.5 bg-white/80 backdrop-blur-md border border-slate-200/70 text-brand-dark font-medium text-sm rounded-full hover:bg-brand-teal hover:text-white hover:border-brand-teal hover:shadow-lg transition-all duration-300 group"
+  >
     <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
     </svg>
@@ -136,247 +171,585 @@
   <div class="glow-orb glow-yellow"></div>
   <div class="glow-orb glow-dark"></div>
 
-  <!-- Buscador Principal -->
-  <div class="glass-card w-full max-w-lg p-6 sm:p-8 mt-14 sm:mt-10 text-center z-10">
-    <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 animate-float group cursor-default">
-      <div class="absolute inset-0 bg-brand-teal rounded-full blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
-      <img src="https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png" alt="Logo" class="relative w-full h-full object-cover rounded-full border-4 border-white/90 shadow-xl group-hover:scale-105 transition-transform duration-500">
-    </div>
-    
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-2">Portal de Calificaciones</h2>
-    <p class="text-slate-500 font-light text-sm sm:text-base mb-8">Ingresa tu número de documento para consultar tus resultados académicos.</p>
-    
-    <!-- MEJORA UX: inputMode para teclado numérico y evento onkeypress para el Enter -->
-    <div class="relative w-full max-w-xs mx-auto mb-6">
-      <input type="number" id="cedula" inputmode="numeric" 
-             class="w-full px-5 py-4 text-center text-lg font-medium bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-shadow shadow-inner text-brand-dark placeholder-slate-400" 
-             placeholder="Ej. 12345678" 
-             onkeypress="if(event.key === 'Enter') { buscar(); return false; }; return event.charCode >= 48 && event.charCode <= 57;">
-    </div>
-    
-    <button id="btnBuscar" onclick="buscar()" class="w-full max-w-xs mx-auto bg-brand-teal hover:bg-[#006a73] text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
-      <span id="textoBoton">Consultar Resultados</span>
-    </button>
+  <main class="w-full flex flex-col items-center flex-grow">
 
-    <div id="loader" class="hidden mt-8 flex flex-col items-center justify-center">
-      <div class="spinner mb-3"></div>
-      <p class="text-brand-teal font-medium text-sm">Buscando expediente académico...</p>
-    </div>
-  </div>
+    <section class="glass-card w-full max-w-lg p-6 sm:p-8 mt-14 sm:mt-10 text-center z-10">
 
-  <div id="resultados-container" class="w-full max-w-3xl mt-10 z-10 flex flex-col gap-8 pb-10 flex-grow"></div>
+      <div class="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 animate-float group">
+        <div class="absolute inset-0 bg-brand-teal rounded-full blur-md opacity-40 group-hover:opacity-70 transition-opacity duration-500"></div>
+        <img
+          src="https://assets.poap.xyz/cec12a20-fefb-4199-9cc0-b1ece87fe44d.png"
+          alt="Logo de La Movida de SST"
+          class="relative w-full h-full object-cover rounded-full border-4 border-white/90 shadow-xl group-hover:scale-105 transition-transform duration-500"
+        >
+      </div>
 
-  <!-- Footer Corporativo -->
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-2">
+        Portal de Calificaciones
+      </h1>
+
+      <p class="text-slate-500 font-light text-sm sm:text-base mb-7">
+        Consulta la mejor calificación registrada en Moodle.
+      </p>
+
+      <form id="consulta-form" class="w-full max-w-xs mx-auto" novalidate>
+
+        <label for="cedula" class="block text-left text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+          Número de cédula
+        </label>
+
+        <input
+          type="text"
+          id="cedula"
+          inputmode="numeric"
+          autocomplete="username"
+          maxlength="12"
+          class="w-full px-5 py-4 text-center text-lg font-semibold bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-shadow shadow-inner text-brand-dark placeholder-slate-400"
+          placeholder="Ej. 13534591"
+          required
+        >
+
+        <label for="codigo" class="block text-left text-xs font-bold uppercase tracking-wider text-slate-500 mt-5 mb-2">
+          Código de integrante
+        </label>
+
+        <div class="relative">
+          <input
+            type="password"
+            id="codigo"
+            autocomplete="current-password"
+            maxlength="5"
+            class="w-full px-5 py-4 pr-14 text-center text-lg font-semibold uppercase tracking-[0.25em] bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-teal focus:border-transparent transition-shadow shadow-inner text-brand-dark placeholder-slate-400"
+            placeholder="•••••"
+            required
+          >
+
+          <button
+            type="button"
+            id="btn-ver-codigo"
+            class="absolute inset-y-0 right-0 w-14 flex items-center justify-center text-slate-400 hover:text-brand-teal transition-colors"
+            aria-label="Mostrar u ocultar código"
+            title="Mostrar u ocultar código"
+          >
+            <svg id="icono-ojo" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 0c-1.5 4-5 7-9 7s-7.5-3-9-7c1.5-4 5-7 9-7s7.5 3 9 7z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <p class="mt-3 text-xs leading-relaxed text-slate-400">
+          Utiliza el mismo código privado de tu credencial de La Movida SST.
+        </p>
+
+        <button
+          id="btnBuscar"
+          type="submit"
+          class="w-full mt-6 bg-brand-teal hover:bg-[#006a73] text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span id="textoBoton">Consultar resultados</span>
+        </button>
+      </form>
+
+      <div id="loader" class="hidden mt-8 flex-col items-center justify-center">
+        <div class="spinner mb-3"></div>
+        <p class="text-brand-teal font-medium text-sm">
+          Sincronizando calificaciones con Moodle...
+        </p>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-teal-100 bg-teal-50 px-4 py-3 text-left">
+        <p class="text-xs leading-relaxed text-teal-800">
+          <strong>Consulta protegida:</strong> la cédula y el código se validan antes de mostrar los resultados.
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="resultados-container"
+      class="w-full max-w-3xl mt-10 z-10 flex flex-col gap-8 pb-10"
+      aria-live="polite"
+    ></section>
+
+  </main>
+
   <footer class="w-full mt-auto z-10 pt-10 pb-6 px-4 text-center">
-    <div class="max-w-4xl mx-auto p-6 bg-white/40 backdrop-blur-md border-t border-slate-200/60 rounded-3xl shadow-[0_-10px_30px_-15px_rgba(0,123,133,0.1)]">
-      <h3 class="text-lg sm:text-xl font-extrabold text-brand-dark mb-1">Academia Movida de SST</h3>
-      <p class="text-sm font-medium text-brand-teal italic mb-5">"Aprendizaje Justo a tiempo"</p>
-      
+    <div class="max-w-4xl mx-auto p-6 bg-white/50 backdrop-blur-md border-t border-slate-200/60 rounded-3xl shadow-[0_-10px_30px_-15px_rgba(0,123,133,0.1)]">
+      <h2 class="text-lg sm:text-xl font-extrabold text-brand-dark mb-1">
+        Academia Movida de SST
+      </h2>
+
+      <p class="text-sm font-medium text-brand-teal italic mb-5">
+        “Aprendizaje justo a tiempo”
+      </p>
+
       <div class="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-8 text-sm text-slate-600 mb-5">
         <a href="mailto:info@movidasst.com" class="flex items-center gap-1.5 hover:text-brand-teal transition-colors font-medium">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
           info@movidasst.com
         </a>
+
         <span class="hidden sm:inline text-slate-300">|</span>
-        <a href="https://www.movidasst.com" target="_blank" class="flex items-center gap-1.5 hover:text-brand-teal transition-colors font-medium">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+
+        <a href="https://www.movidasst.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-brand-teal transition-colors font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+          </svg>
           www.movidasst.com
         </a>
       </div>
-      
+
       <p class="text-xs text-slate-400">
-        Elaborado por: <span class="font-bold text-slate-500">David Linares Brea</span>
+        Elaborado por:
+        <span class="font-bold text-slate-500">David Linares Brea</span>
       </p>
     </div>
   </footer>
 
   <script>
-    const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbw_MPu-DqWbu9UoqSWLLvh3oaJeoMuJJIlRfMX_4X4ZjCQBnEn4RSs2MbgRhhAYS3WM/exec';
+    const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbwkJTKqDNRs1Hry69oNz5EX7qrW5cXiuEb4K32ZHsGS0evDFmKbjrR85hftMQGkZsXy/exec';
+
+    let ultimaConsulta = {
+      cedula: '',
+      calificaciones: []
+    };
+
+    const form = document.getElementById('consulta-form');
+    const cedulaInput = document.getElementById('cedula');
+    const codigoInput = document.getElementById('codigo');
+    const btnBuscar = document.getElementById('btnBuscar');
+    const textoBoton = document.getElementById('textoBoton');
+    const loader = document.getElementById('loader');
+    const contenedor = document.getElementById('resultados-container');
+    const btnVerCodigo = document.getElementById('btn-ver-codigo');
+
+    cedulaInput.addEventListener('input', () => {
+      cedulaInput.value = cedulaInput.value.replace(/\D/g, '').slice(0, 12);
+    });
+
+    codigoInput.addEventListener('input', () => {
+      codigoInput.value = codigoInput.value
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, '')
+        .slice(0, 5);
+    });
+
+    btnVerCodigo.addEventListener('click', () => {
+      codigoInput.type =
+        codigoInput.type === 'password'
+          ? 'text'
+          : 'password';
+    });
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      buscar();
+    });
+
+    function escaparHtml(valor) {
+      return String(valor ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatearNumero(valor) {
+      const numero = Number(valor);
+
+      if (!Number.isFinite(numero)) {
+        return '—';
+      }
+
+      return numero.toLocaleString('es-VE', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function formatearFecha(valor) {
+      if (!valor) {
+        return 'No disponible';
+      }
+
+      const fecha = new Date(valor);
+
+      if (Number.isNaN(fecha.getTime())) {
+        return 'No disponible';
+      }
+
+      return new Intl.DateTimeFormat('es-VE', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }).format(fecha);
+    }
+
+    function enmascararCedula(cedula) {
+      const limpia = String(cedula || '').replace(/\D/g, '');
+
+      if (limpia.length <= 4) {
+        return limpia;
+      }
+
+      return '••••' + limpia.slice(-4);
+    }
+
+    function activarCarga(activo) {
+      loader.classList.toggle('hidden', !activo);
+      loader.classList.toggle('flex', activo);
+      btnBuscar.disabled = activo;
+      textoBoton.textContent = activo
+        ? 'Consultando...'
+        : 'Consultar resultados';
+    }
 
     async function buscar() {
-      const cedula = document.getElementById('cedula').value.trim();
-      if (!cedula) {
-        mostrarMensajeUI("Por favor, ingresa tu número de documento.", "yellow");
+      const cedula = cedulaInput.value.trim().replace(/\D/g, '');
+      const codigo = codigoInput.value.trim().toUpperCase();
+
+      if (!/^\d{6,12}$/.test(cedula)) {
+        mostrarMensajeUI(
+          'Ingresa una cédula válida, únicamente con números.',
+          'yellow'
+        );
+        cedulaInput.focus();
         return;
       }
 
-      // UX: Feedback visual en el botón
-      document.getElementById('loader').classList.remove('hidden');
-      const btnBuscar = document.getElementById('btnBuscar');
-      const textoBoton = document.getElementById('textoBoton');
-      btnBuscar.disabled = true;
-      textoBoton.innerText = "Buscando...";
-      document.getElementById('resultados-container').innerHTML = '';
+      if (!/^[A-Z0-9]{5}$/.test(codigo)) {
+        mostrarMensajeUI(
+          'Ingresa tu código privado de integrante de 5 caracteres.',
+          'yellow'
+        );
+        codigoInput.focus();
+        return;
+      }
+
+      activarCarga(true);
+      contenedor.innerHTML = '';
 
       try {
-        const response = await fetch(`${URL_SCRIPT}?cedula=${cedula}`);
+        const body = new URLSearchParams();
+        body.set('action', 'sync_member_grades');
+        body.set('cedula', cedula);
+        body.set('codigo', codigo);
+        body.set('website', '');
+
+        const response = await fetch(URL_SCRIPT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          body: body.toString()
+        });
+
         const respuesta = await response.json();
-        procesarRespuestaExitosa(respuesta);
+
+        if (
+          !response.ok ||
+          respuesta.result !== 'success'
+        ) {
+          throw new Error(
+            respuesta.message ||
+            'No fue posible consultar las calificaciones.'
+          );
+        }
+
+        const calificaciones = Array.isArray(respuesta.calificaciones)
+          ? respuesta.calificaciones
+          : [];
+
+        ultimaConsulta = {
+          cedula,
+          calificaciones
+        };
+
+        procesarRespuestaExitosa(calificaciones, cedula);
+
       } catch (error) {
-        mostrarMensajeUI("Error de conexión. Intenta nuevamente o verifica tu red.", "red");
+        console.error(error);
+
+        mostrarMensajeUI(
+          error?.message ||
+          'Error de conexión. Intenta nuevamente.',
+          'red'
+        );
+
       } finally {
-        document.getElementById('loader').classList.add('hidden');
-        btnBuscar.disabled = false;
-        textoBoton.innerText = "Consultar Resultados";
+        activarCarga(false);
       }
     }
 
     function mostrarMensajeUI(mensaje, color) {
-        const colorBorder = color === 'red' ? 'border-red-500' : 'border-brand-yellow';
-        document.getElementById('resultados-container').innerHTML = 
-          `<div class="glass-card p-6 border-l-4 ${colorBorder} animate-float"><p class="text-brand-dark font-medium">${mensaje}</p></div>`;
+      const esError = color === 'red';
+
+      const clases = esError
+        ? 'border-red-400 bg-red-50 text-red-700'
+        : 'border-brand-yellow bg-amber-50 text-amber-800';
+
+      const icono = esError
+        ? 'M12 9v4m0 4h.01M10.29 3.86l-8.82 15.28A2 2 0 003.2 22h17.6a2 2 0 001.73-2.86L13.71 3.86a2 2 0 00-3.42 0z'
+        : 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z';
+
+      contenedor.innerHTML = `
+        <div class="glass-card p-6 border-l-4 ${clases}">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${icono}"></path>
+            </svg>
+            <p class="font-semibold leading-relaxed">
+              ${escaparHtml(mensaje)}
+            </p>
+          </div>
+        </div>
+      `;
     }
 
-    function compartirWhatsApp(nombres, curso, nota, esAprobado) {
-      const estado = esAprobado ? 'APROBADO ✅' : 'REPROBADO ❌';
-      const mensaje = `🎓 ¡Hola! Te comparto mis resultados académicos de *La Movida de SST*:\n\n📚 *Curso:* ${curso}\n👤 *Estudiante:* ${nombres}\n📝 *Nota:* ${nota}/20\n📊 *Estado:* ${estado}\n\n🔗 Consultado en el Portal Oficial.`;
-      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
-    }
+    function procesarRespuestaExitosa(calificaciones, cedula) {
+      if (calificaciones.length === 0) {
+        contenedor.innerHTML = `
+          <div class="glass-card p-8 text-center">
+            <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
 
-    async function descargarTarjeta(idTarjeta, nombre, curso, btnElement) {
-      const elemento = document.getElementById(idTarjeta);
-      const accionesDiv = elemento.querySelector('.acciones-tarjeta');
-      
-      const originalText = btnElement.innerHTML;
-      btnElement.innerHTML = `<div class="w-4 h-4 border-2 border-slate-400 border-t-slate-600 rounded-full animate-spin"></div> Procesando...`;
-      btnElement.disabled = true;
-      accionesDiv.style.visibility = 'hidden';
+            <h3 class="text-xl font-bold text-brand-dark mb-2">
+              Sin calificaciones registradas
+            </h3>
 
-      try {
-        const canvas = await html2canvas(elemento, { scale: 2, backgroundColor: '#ffffff' });
-        const imgData = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.download = `Calificaciones_${nombre}_${curso.replace(/\s+/g, '_')}.png`;
-        link.href = imgData;
-        link.click();
-      } catch (error) {
-        mostrarMensajeUI("No se pudo generar la imagen.", "yellow");
-      } finally {
-        accionesDiv.style.visibility = 'visible';
-        btnElement.innerHTML = originalText;
-        btnElement.disabled = false;
-      }
-    }
-
-    function procesarRespuestaExitosa(respuesta) {
-      const contenedor = document.getElementById('resultados-container');
-
-      if (!respuesta.exito) {
-        mostrarMensajeUI(respuesta.mensaje, "red"); return;
-      }
-      if (respuesta.datos.length === 0) {
-        contenedor.innerHTML = 
-        `<div class="glass-card p-8 text-center animate-float">
-            <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <h3 class="text-xl font-bold text-brand-dark mb-2">Sin registros</h3>
-            <p class="text-slate-500 font-light">Aún no hay calificaciones asociadas a este documento.</p>
-        </div>`;
+            <p class="text-slate-500 font-light">
+              Moodle todavía no tiene una calificación sincronizada para este integrante.
+            </p>
+          </div>
+        `;
         return;
       }
 
-      const cursosAgrupados = {};
-      respuesta.datos.forEach(dato => {
-        const nombreCurso = dato.curso || 'Curso General';
-        if (!cursosAgrupados[nombreCurso]) { cursosAgrupados[nombreCurso] = []; }
-        cursosAgrupados[nombreCurso].push(dato);
-      });
+      const documentoSeguro = enmascararCedula(cedula);
 
-      let html = '';
-      let contadorTarjeta = 0;
+      contenedor.innerHTML = calificaciones
+        .map((dato, indice) => {
+          const idTarjeta = `tarjeta-curso-${indice + 1}`;
+          const curso = dato.curso || dato.nombre_corto || 'Curso';
+          const tieneNota =
+            dato.nota !== null &&
+            dato.nota !== '' &&
+            Number.isFinite(Number(dato.nota));
 
-      for (const nombreCurso in cursosAgrupados) {
-        contadorTarjeta++;
-        const idTarjetaActual = `tarjeta-curso-${contadorTarjeta}`;
-        const historial = cursosAgrupados[nombreCurso];
-        
-        historial.sort((a, b) => parseInt(a.intento) - parseInt(b.intento));
-        const intentoAprobado = historial.find(d => String(d.resultado).toLowerCase().includes('aprobado'));
-        const datoPrincipal = intentoAprobado || historial[historial.length - 1];
-        const esAprobadoFinal = !!intentoAprobado;
+          const nota = tieneNota
+            ? formatearNumero(dato.nota)
+            : '—';
 
-        let linkFoto = '';
-        const intentoConFoto = historial.find(h => h.foto && String(h.foto).length > 10);
-        if (intentoConFoto) { linkFoto = intentoConFoto.foto; }
-        
-        const idImg = linkFoto.match(/[-\w]{25,}/) ? linkFoto.match(/[-\w]{25,}/)[0] : '';
-        const urlOp1 = idImg ? `https://lh3.googleusercontent.com/d/${idImg}` : '';
-        const urlOp2 = idImg ? `https://drive.google.com/thumbnail?id=${idImg}&sz=w800` : '';
-        const urlOp3 = idImg ? `https://drive.google.com/uc?export=view&id=${idImg}` : '';
-        
-        // MEJORA UI: Avatar dinámico inteligente si no hay foto
-        const urlAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(datoPrincipal.nombres + ' ' + datoPrincipal.apellidos)}&background=007b85&color=fff&size=200&font-size=0.33`;
+          const notaMaxima = formatearNumero(
+            dato.nota_maxima ?? 10
+          );
 
-        const agotado = !esAprobadoFinal && historial.length >= 3;
-        const colorBadge = esAprobadoFinal ? 'bg-brand-green text-white' : 'bg-red-500 text-white';
-        const iconoEstado = esAprobadoFinal 
-            ? `<svg class="w-5 h-5 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
-            : `<svg class="w-5 h-5 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+          const estadoNormalizado = String(
+            dato.estado || ''
+          ).toUpperCase();
 
-        let historialHTML = `<div class="mt-6 pt-6 border-t border-slate-100"><h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Historial de Intentos</h4><div class="flex flex-wrap gap-2">`;
-        historial.forEach(h => {
-            const hAprobado = String(h.resultado).toLowerCase().includes('aprobado');
-            const colorPill = hAprobado ? 'bg-green-50 text-brand-green border-green-200' : 'bg-red-50 text-red-600 border-red-200';
-            const icon = hAprobado ? '✓' : '✗';
-            historialHTML += `<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium border ${colorPill}">Intento ${h.intento}: Nota ${h.nota} ${icon}</span>`;
-        });
-        historialHTML += `</div></div>`;
+          const aprobado =
+            dato.aprobado === true ||
+            estadoNormalizado === 'APROBADO';
 
-        html += `
-          <div id="${idTarjetaActual}" class="glass-card p-6 md:p-8 bg-white ${agotado ? 'border-red-400' : ''}">
-            ${agotado ? `<div class="bg-red-500 text-white text-xs font-bold uppercase tracking-widest text-center py-2 -mx-8 -mt-8 mb-6">Has agotado el límite de intentos (3)</div>` : ''}
-            
-            <div class="flex flex-col md:flex-row items-center md:items-start pb-6 mb-6 border-b border-slate-100">
-              <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg overflow-hidden mb-4 md:mb-0 md:mr-8 bg-slate-100 flex-shrink-0 mx-auto md:mx-0">
-                <img src="${urlOp1 || urlAvatar}" data-fallback="1" onerror="if(this.dataset.fallback==='1' && '${urlOp2}') { this.dataset.fallback='2'; this.src='${urlOp2}'; } else if (this.dataset.fallback==='2' && '${urlOp3}') { this.dataset.fallback='3'; this.src='${urlOp3}'; } else { this.src='${urlAvatar}'; }" alt="Estudiante" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-              </div>
-              
-              <div class="text-center md:text-left flex-grow pt-2 md:pt-4">
-                <span class="text-xs font-bold text-brand-teal uppercase tracking-wider mb-1 block">${nombreCurso}</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-brand-dark mb-1">${datoPrincipal.nombres} ${datoPrincipal.apellidos}</h3>
-                <p class="text-slate-500 font-light mb-3 break-words">${datoPrincipal.correo}</p>
-                <div class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold shadow-sm ${colorBadge}">
-                  ${iconoEstado} ${esAprobadoFinal ? 'CURSO APROBADO' : 'REPROBADO'}
+          const sinCalificacion =
+            !tieneNota ||
+            estadoNormalizado === 'SIN CALIFICACION' ||
+            estadoNormalizado === 'SIN CALIFICACIÓN';
+
+          const estado = sinCalificacion
+            ? 'SIN CALIFICACIÓN'
+            : aprobado
+              ? 'APROBADO'
+              : 'NO APROBADO';
+
+          const badge = sinCalificacion
+            ? 'bg-slate-100 text-slate-600 border-slate-200'
+            : aprobado
+              ? 'bg-green-50 text-green-700 border-green-200'
+              : 'bg-red-50 text-red-700 border-red-200';
+
+          const colorNota = sinCalificacion
+            ? 'text-slate-400'
+            : aprobado
+              ? 'text-brand-teal'
+              : 'text-red-500';
+
+          const icono = sinCalificacion
+            ? `
+              <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            `
+            : aprobado
+              ? `
+                <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              `
+              : `
+                <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              `;
+
+          return `
+            <article id="${idTarjeta}" class="result-card p-6 md:p-8 bg-white">
+
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 pb-6 border-b border-slate-100">
+
+                <div class="flex-grow min-w-0">
+                  <span class="text-xs font-bold text-brand-teal uppercase tracking-wider mb-2 block">
+                    Resultado académico
+                  </span>
+
+                  <h2 class="text-xl md:text-2xl font-extrabold text-brand-dark leading-snug">
+                    ${escaparHtml(curso)}
+                  </h2>
+
+                  <p class="mt-3 text-sm text-slate-400">
+                    Documento verificado: ${escaparHtml(documentoSeguro)}
+                  </p>
+
+                  <div class="mt-4 inline-flex items-center px-4 py-2 rounded-full text-sm font-bold border ${badge}">
+                    ${icono}
+                    ${estado}
+                  </div>
+                </div>
+
+                <div class="text-center bg-slate-50 rounded-2xl p-5 border border-slate-100 min-w-[145px]">
+                  <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                    Mejor nota
+                  </span>
+
+                  <span class="block text-4xl font-extrabold ${colorNota}">
+                    ${nota}
+                  </span>
+
+                  <span class="block text-xs text-slate-400 font-medium">
+                    / ${notaMaxima}
+                  </span>
                 </div>
               </div>
-              
-              <div class="mt-4 md:mt-0 md:ml-4 text-center bg-slate-50 rounded-2xl p-4 border border-slate-100 min-w-[100px] w-full md:w-auto">
-                <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Mejor Nota</span>
-                <span class="block text-4xl font-extrabold ${esAprobadoFinal ? 'text-brand-teal' : 'text-red-500'}">${datoPrincipal.nota}</span>
-                <span class="block text-xs text-slate-400 font-medium">/ 20</span>
-              </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm px-2">
-              <div class="flex justify-between items-center py-2 border-b border-slate-50">
-                <span class="font-medium text-slate-400">Fecha Efectiva</span>
-                <span class="font-bold text-brand-dark text-right">${datoPrincipal.fecha}</span>
-              </div>
-              <div class="flex justify-between items-center py-2 border-b border-slate-50">
-                <span class="font-medium text-slate-400">Aciertos</span>
-                <span class="font-bold text-brand-dark">${datoPrincipal.aciertos}</span>
-              </div>
-            </div>
 
-            ${historial.length > 1 ? historialHTML : ''}
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4">
+                  <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Estado
+                  </span>
+                  <strong class="text-brand-dark">
+                    ${estado}
+                  </strong>
+                </div>
 
-            <!-- MEJORA UI/UX: Botones optimizados para móvil (w-full en móviles, w-auto en Desktop) -->
-            <div class="acciones-tarjeta mt-8 pt-4 flex flex-col sm:flex-row gap-3 justify-center md:justify-end">
-              <button onclick="descargarTarjeta('${idTarjetaActual}', '${datoPrincipal.nombres}', '${nombreCurso}', this)" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors text-sm font-bold shadow-sm">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                Capturar
-              </button>
-              
-              <button onclick="compartirWhatsApp('${datoPrincipal.nombres} ${datoPrincipal.apellidos}', '${nombreCurso}', '${datoPrincipal.nota}', ${esAprobadoFinal})" class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-xl hover:bg-[#20b858] transition-colors text-sm font-bold shadow-sm shadow-[#25D366]/30">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                WhatsApp
-              </button>
-            </div>
-          </div>
-        `;
+                <div class="rounded-2xl border border-slate-100 bg-slate-50 px-5 py-4">
+                  <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Última sincronización
+                  </span>
+                  <strong class="text-sm text-brand-dark leading-relaxed">
+                    ${escaparHtml(formatearFecha(dato.fecha_sincronizacion))}
+                  </strong>
+                </div>
+              </div>
+
+              <div class="acciones-tarjeta mt-7 pt-5 border-t border-slate-100 flex flex-col sm:flex-row gap-3 justify-end">
+
+                <button
+                  type="button"
+                  onclick="descargarTarjeta('${idTarjeta}', '${indice + 1}', this)"
+                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-colors text-sm font-bold shadow-sm"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  Capturar
+                </button>
+
+                <button
+                  type="button"
+                  onclick='compartirWhatsApp(${JSON.stringify(curso)}, ${JSON.stringify(nota)}, ${JSON.stringify(notaMaxima)}, ${JSON.stringify(estado)})'
+                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-xl hover:bg-[#20b858] transition-colors text-sm font-bold shadow-sm shadow-[#25D366]/30"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                  </svg>
+                  WhatsApp
+                </button>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function compartirWhatsApp(curso, nota, notaMaxima, estado) {
+      const mensaje =
+        `🎓 *Resultado académico — La Movida de SST*\n\n` +
+        `📚 *Curso:* ${curso}\n` +
+        `📝 *Mejor nota:* ${nota}/${notaMaxima}\n` +
+        `📊 *Estado:* ${estado}\n\n` +
+        `🔗 Consultado en el Portal Oficial de Calificaciones.`;
+
+      const url =
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
+
+      window.open(
+        url,
+        '_blank',
+        'noopener,noreferrer'
+      );
+    }
+
+    async function descargarTarjeta(idTarjeta, numero, btnElement) {
+      const elemento = document.getElementById(idTarjeta);
+
+      if (!elemento) {
+        return;
       }
 
-      contenedor.innerHTML = html;
+      const acciones = elemento.querySelector('.acciones-tarjeta');
+      const contenidoOriginal = btnElement.innerHTML;
+
+      btnElement.disabled = true;
+      btnElement.innerHTML =
+        '<span class="w-4 h-4 border-2 border-slate-400 border-t-slate-700 rounded-full animate-spin"></span> Procesando...';
+
+      if (acciones) {
+        acciones.style.visibility = 'hidden';
+      }
+
+      try {
+        const canvas = await html2canvas(elemento, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          useCORS: true
+        });
+
+        const enlace = document.createElement('a');
+        enlace.download =
+          `Calificacion_Movida_SST_${numero}.png`;
+        enlace.href = canvas.toDataURL('image/png');
+        enlace.click();
+
+      } catch (error) {
+        console.error(error);
+
+        mostrarMensajeUI(
+          'No se pudo generar la imagen del resultado.',
+          'yellow'
+        );
+
+      } finally {
+        if (acciones) {
+          acciones.style.visibility = 'visible';
+        }
+
+        btnElement.disabled = false;
+        btnElement.innerHTML = contenidoOriginal;
+      }
     }
   </script>
 </body>
